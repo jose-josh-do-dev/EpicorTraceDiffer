@@ -33,6 +33,18 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Menees.Common">
+      <HintPath>D:\Utils\Diff\Menees.Common\Menees.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Menees.Diffs">
+      <HintPath>D:\Utils\Diff\Menees.Diffs.Controls\Menees.Diffs.dll</HintPath>
+    </Reference>
+    <Reference Include="Menees.Diffs.Controls">
+      <HintPath>D:\Utils\Diff\Menees.Diffs.Controls\Menees.Diffs.Controls.dll</HintPath>
+    </Reference>
+    <Reference Include="Menees.Windows.Forms">
+      <HintPath>D:\Utils\Diff\Menees.Diffs.Controls\Menees.Windows.Forms.dll</HintPath>
+    </Reference>
     <Reference Include="ScintillaNET, Version=3.6.3.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\jacobslusser.ScintillaNET.3.6.3\lib\net40\ScintillaNET.dll</HintPath>
     </Reference>

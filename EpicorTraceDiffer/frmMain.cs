@@ -1,4 +1,5 @@
-﻿using Microsoft.XmlDiffPatch;
+﻿using Menees.Diffs;
+using Microsoft.XmlDiffPatch;
 using ScintillaNET;
 using System;
 using System.Collections.Generic;
@@ -25,6 +26,8 @@ namespace EpicorTraceDiffer
         XDocument xmlDoc;
         List<XElement> methods;
         List<Methods> methodListFrom, methodListTo;
+        List<string> bos;
+        //Menees.Diffs.Controls.DiffControl dc;
         private void frmTraceDiffer_Load(object sender, EventArgs e)
         {
             TextArea1 = new ScintillaNET.Scintilla();
@@ -52,6 +55,7 @@ namespace EpicorTraceDiffer
                 methods = xmlDoc.Descendants("methodName").ToList();
                 methodListFrom = new List<Methods>();
                 methodListTo = new List<Methods>();
+                bos = new List<string>();
                 foreach (var x in methods)
                 {
                     Methods m = new Methods();
@@ -61,9 +65,10 @@ namespace EpicorTraceDiffer
                     m.ReturnValue = x.Parent.Descendants("returnValues").FirstOrDefault();
                     methodListFrom.Add(m);
                     methodListTo.Add(m);
+                    if (!bos.Contains(m.BO))
+                        bos.Add(m.BO);
                 }
-                cmbFrom.DataSource = methodListFrom;
-                cmdTo.DataSource = methodListTo;
+                cmbBO.DataSource = bos;
             }
         }
 
@@ -73,14 +78,23 @@ namespace EpicorTraceDiffer
             {
                 Methods from = cmbFrom.SelectedItem as Methods;
                 Methods to = cmdTo.SelectedItem as Methods;
+                XElement fromDS=null;
+                XElement toDS=null;
+                bool equals = false;
                 if(!from.BO.Equals(to.BO))
                 {
                     MessageBox.Show("You can't compare methods in different BO's");
                 }
-                else
+                else if(from.Equals(to))
                 {
-                    var fromDS =from.ReturnValue.Descendants().Where(d => d.Name.ToString().Contains("DataSet")).FirstOrDefault();
-                    var toDS = to.Parameters.Descendants().Where(d => d.Name.ToString().Contains("DataSet")).FirstOrDefault();
+                    fromDS = from.Parameters.Descendants().Where(d => d.Name.ToString().Contains("DataSet")).FirstOrDefault();
+                    toDS = to.ReturnValue.Descendants().Where(d => d.Name.ToString().Contains("DataSet")).FirstOrDefault();
+                    equals = true;
+                }
+                else { 
+                
+                    fromDS =from.ReturnValue.Descendants().Where(d => d.Name.ToString().Contains("DataSet")).FirstOrDefault();
+                    toDS = to.Parameters.Descendants().Where(d => d.Name.ToString().Contains("DataSet")).FirstOrDefault();
 
                     if(fromDS==null)
                     {
@@ -92,9 +106,13 @@ namespace EpicorTraceDiffer
                     }
                     else
                     {
-                        Comparer(fromDS, toDS);
+                        
                     }
 
+                }
+                if(toDS!=null && fromDS!=null)
+                {
+                    Comparer(fromDS, toDS, equals);
                 }
             }
             else
@@ -103,15 +121,13 @@ namespace EpicorTraceDiffer
             }
         }
 
-        private void Comparer(XElement fromDS, XElement toDS)
+        private void Comparer(XElement fromDS, XElement toDS, bool equal = false)
         {
             string from = fromDS.ToString();
             string to = toDS.ToString();
 
 
-            /*var diff = new XmlDiff(from, to);
-            diff.CompareDocuments(new XmlDiffOptions());
-            var s =diff.ToString();*/
+            
             XmlDiff diff = new XmlDiff();
             diff.IgnoreChildOrder = true;
             diff.IgnoreComments = true;
@@ -125,16 +141,39 @@ namespace EpicorTraceDiffer
             StringWriter diffgramString = new StringWriter();
             XmlTextWriter diffgramXml = new XmlTextWriter(diffgramString);
             bool diffBool = diff.Compare(new XmlTextReader(new StringReader(from)), new XmlTextReader(new StringReader(to)),diffgramXml);
-            XmlDiffView dv = new XmlDiffView();
+            /*XmlDiffView dv = new XmlDiffView();
             dv.Load(new XmlTextReader(new StringReader(from)), new XmlTextReader(new StringReader(diffgramString.ToString())));
 
             StringWriter sw = new StringWriter();
 
 
+           
+
+            dv.GetHtml(sw);*/
+            IList<string> linesFrom = GetLines(from); ;
+            IList<string> linesTo = GetLines(to);
+            TextDiff Diff = new TextDiff(HashType.Crc32, true, true);
+            var es = Diff.Execute(linesFrom, linesTo);
             
+            
+            dc.SetData(linesFrom, linesTo, es,$"{(equal ? "Data Sent To:":"Returned From:")} {(cmbFrom.SelectedItem as Methods).Method}",$"{(equal ?"Data Returned From:":"Data Sent To:")}{(cmdTo.SelectedItem as Methods).Method}");
+        }
 
-            dv.GetHtml(sw);
+        private IList<string> GetLines(string text)
+        {
+            IList<string> lines = new List<string>();
+            foreach(var s in text.Split(new[] { Environment.NewLine },StringSplitOptions.None))
+            {
+                lines.Add(s);
+            }
 
+            return lines;
+        }
+
+        private void cmbBO_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            cmbFrom.DataSource = methodListFrom.Where(b => b.BO == cmbBO.SelectedItem.ToString()).ToList();
+            cmdTo.DataSource = methodListTo.Where(b => b.BO == cmbBO.SelectedItem.ToString()).ToList();
         }
 
         private void InitSyntaxColoring(ScintillaNET.Scintilla TextArea)
