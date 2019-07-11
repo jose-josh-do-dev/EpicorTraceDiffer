@@ -42,7 +42,9 @@ namespace EpicorTraceDiffer
             TextArea2.Dock = DockStyle.Fill;
             spcMain.Panel1.Controls.Add(TextArea1);
             spcMain.Panel2.Controls.Add(TextArea2);
-            
+            var mi = dc.GetType().GetField("btnViewFile", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic);
+            var ts = mi.GetValue(dc);
+            (ts as ToolStripButton).Visible = false;
         }
 
         private void btnTrace_Click(object sender, EventArgs e)

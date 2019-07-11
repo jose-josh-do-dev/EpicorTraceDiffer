@@ -81,7 +81,7 @@ namespace EpicorTraceDiffer
             // cmbFrom
             // 
             this.cmbFrom.FormattingEnabled = true;
-            this.cmbFrom.Location = new System.Drawing.Point(94, 124);
+            this.cmbFrom.Location = new System.Drawing.Point(600, 97);
             this.cmbFrom.Name = "cmbFrom";
             this.cmbFrom.Size = new System.Drawing.Size(369, 21);
             this.cmbFrom.TabIndex = 2;
@@ -90,7 +90,7 @@ namespace EpicorTraceDiffer
             // lblFromMethod
             // 
             this.lblFromMethod.AutoSize = true;
-            this.lblFromMethod.Location = new System.Drawing.Point(20, 127);
+            this.lblFromMethod.Location = new System.Drawing.Point(527, 100);
             this.lblFromMethod.Name = "lblFromMethod";
             this.lblFromMethod.Size = new System.Drawing.Size(67, 13);
             this.lblFromMethod.TabIndex = 3;
@@ -127,7 +127,7 @@ namespace EpicorTraceDiffer
             // 
             // btnCompare
             // 
-            this.btnCompare.Location = new System.Drawing.Point(469, 122);
+            this.btnCompare.Location = new System.Drawing.Point(890, 124);
             this.btnCompare.Name = "btnCompare";
             this.btnCompare.Size = new System.Drawing.Size(75, 23);
             this.btnCompare.TabIndex = 7;
@@ -164,7 +164,7 @@ namespace EpicorTraceDiffer
             this.tabC.Location = new System.Drawing.Point(3, 159);
             this.tabC.Name = "tabC";
             this.tabC.SelectedIndex = 0;
-            this.tabC.Size = new System.Drawing.Size(902, 423);
+            this.tabC.Size = new System.Drawing.Size(966, 423);
             this.tabC.TabIndex = 10;
             // 
             // tabPage3
@@ -224,7 +224,7 @@ namespace EpicorTraceDiffer
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(894, 397);
+            this.tabPage1.Size = new System.Drawing.Size(958, 397);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Diff";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -239,7 +239,7 @@ namespace EpicorTraceDiffer
             this.dc.Name = "dc";
             this.dc.OverviewWidth = 38;
             this.dc.ShowWhiteSpaceInLineDiff = true;
-            this.dc.Size = new System.Drawing.Size(888, 391);
+            this.dc.Size = new System.Drawing.Size(952, 391);
             this.dc.TabIndex = 0;
             this.dc.ViewFont = new System.Drawing.Font("Courier New", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             // 
@@ -258,7 +258,7 @@ namespace EpicorTraceDiffer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(909, 594);
+            this.ClientSize = new System.Drawing.Size(973, 594);
             this.Controls.Add(this.tabC);
             this.Controls.Add(this.lblBO);
             this.Controls.Add(this.cmbBO);
