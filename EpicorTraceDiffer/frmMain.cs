@@ -1,4 +1,5 @@
-﻿using Menees.Diffs;
+﻿using EpicorTraceDiffer.XPathDiscovery;
+using Menees.Diffs;
 using Microsoft.XmlDiffPatch;
 using ScintillaNET;
 using System;
@@ -21,6 +22,7 @@ namespace EpicorTraceDiffer
         public frmTraceDiffer()
         {
             InitializeComponent();
+            
         }
         ScintillaNET.Scintilla TextArea1, TextArea2;
         XDocument xmlDoc;
@@ -35,6 +37,7 @@ namespace EpicorTraceDiffer
             InitSyntaxColoring(TextArea1);
             InitSyntaxColoring(TextArea2);
             InitSyntaxColoring(traceParams);
+            InitXmlSyntax(scinTrace);
             TextArea1.Dock = DockStyle.Fill;
             TextArea2.Dock = DockStyle.Fill;
             spcMain.Panel1.Controls.Add(TextArea1);
@@ -86,6 +89,10 @@ namespace EpicorTraceDiffer
                 if(!from.BO.Equals(to.BO))
                 {
                     MessageBox.Show("You can't compare methods in different BO's");
+                }
+                else if(cmbFrom.SelectedIndex> cmdTo.SelectedIndex)
+                {
+                    MessageBox.Show("You can't compare Methods in reverse order (swap prior and target to comapre");
                 }
                 else if(from.Equals(to))
                 {
@@ -159,6 +166,87 @@ namespace EpicorTraceDiffer
             
             
             dc.SetData(linesFrom, linesTo, es,$"{(equal ? "Data Sent To:":"Returned From:")} {(cmbFrom.SelectedItem as Methods).Method}",$"{(equal ?"Data Returned From:":"Data Sent To:")}{(cmdTo.SelectedItem as Methods).Method}");
+
+            var dic = GenerateDiffCode(fromDS.Parent, XElement.Load(new StringReader(diffgramString.ToString())));
+            bool first = true;
+            StringBuilder sbOrig = new StringBuilder();
+            sbOrig.AppendLine($"//Data Returned from Prior Method{Environment.NewLine}");
+            sbOrig.AppendLine("//Note data type of each field not known maye not be a string allow the compiler to assist");
+            StringBuilder sbChanged = new StringBuilder();
+            
+            sbChanged.AppendLine($"//Data Changed and Sent to the Selected Method {Environment.NewLine}");
+            sbChanged.AppendLine("//Note data type of each field not known maye not be a string allow the compiler to assist");
+            if (!equal)
+            foreach (var x in dic)
+            {
+                string[] ds = x.Key.GetXPath().Split('/');
+                bool found=false;
+                string dataSet="";
+                string dataTable = "";
+                string field = "";
+                int dsIdx = -1;
+
+                foreach(string s in ds)
+                {
+                    dsIdx++;
+                    if (s.Contains("DataSet"))
+                    {
+                        found = true;
+                        break;
+                    }
+                   
+                }
+                if(found)
+                {
+                    if(first)
+                    {
+                        dataSet = ds[dsIdx].Substring(0, ds[dsIdx].IndexOf("["));
+                        sbOrig.AppendLine($"{dataSet} ds = new {dataSet}();");
+                        sbChanged.AppendLine($"{dataSet} ds = new {dataSet}();");
+                        first = false;
+                    }
+                    dataTable = ds[++dsIdx].Substring(0, ds[dsIdx].Length);
+                    sbOrig.Append($"ds.{dataTable}");
+                    sbChanged.Append($"ds.{dataTable}");
+                    field = ds[++dsIdx].Substring(0, ds[dsIdx].IndexOf("["));
+                    sbOrig.Append($".{field} = ");
+                    sbChanged.Append($".{field} = ");
+                    sbOrig.AppendLine($"\"{x.Key.Value};\"");
+                    sbChanged.AppendLine($"\"{x.Value}\";");
+                }
+            }
+            TextArea1.Text = sbOrig.ToString();
+            TextArea2.Text = sbChanged.ToString();
+            
+
+
+
+        }
+
+        private Dictionary<XElement, string> GenerateDiffCode(XElement fromDS, XElement xElement, Dictionary<XElement,string> changedDta=null)
+        {
+            Dictionary<XElement, string> dc;
+            if (changedDta == null)
+                dc = new Dictionary<XElement, string>();
+            else
+                dc = changedDta;
+            //fromDS = fromDS.Parent;
+            XNamespace ns = "http://schemas.microsoft.com/xmltools/2002/xmldiff";
+            foreach (var xe in xElement.Elements(ns + "node"))
+            {
+                var newfromDs = fromDS.Elements().ToList()[Convert.ToInt32(xe.Attribute("match").Value) -1];
+                
+
+                if (xe.Elements(ns+"node").Count()>0)
+                {
+                    dc=GenerateDiffCode(newfromDs, xe,dc);
+                }
+                else
+                {
+                    dc.Add(newfromDs, xe.Value);
+                }
+            }
+            return dc;
         }
 
         private IList<string> GetLines(string text)
@@ -183,10 +271,10 @@ namespace EpicorTraceDiffer
             var meth = cmdTo.SelectedItem as Methods;
             scinTrace.Text = meth.FullPacket.ToString();
             traceParams.Text = $"//Method Parameters{Environment.NewLine}";
-            foreach(var param in meth.FullPacket.Descendants("parameter"))
+            foreach (var param in meth.FullPacket.Descendants("parameter"))
             {
                 string value = param.Value;
-                if(param.Attribute("type").Value=="System.String")
+                if (param.Attribute("type").Value == "System.String")
                 {
                     value = $"\"{value}\"";
                 }
@@ -194,8 +282,39 @@ namespace EpicorTraceDiffer
                 {
                     value = $"new {param.Attribute("type").Value}()";
                 }
-                traceParams.Text += $"{param.Attribute("type").Value} {param.Attribute("name").Value} = {value}{(param.Attribute("type").Value.Contains("DataSet")?";//Dataset should not be new this is an example,rather your current dataset or pull from adapter":";")}{Environment.NewLine}";
+                traceParams.Text += $"{param.Attribute("type").Value} {param.Attribute("name").Value} = {value}{(param.Attribute("type").Value.Contains("DataSet") ? ";//Dataset should not be new this is an example,rather use your current dataset or pull from adapter" : ";")}{Environment.NewLine}";
             }
+            ClearCompare();
+        }
+
+        private void ClearCompare()
+        {
+            TextArea1.Text = "";
+            TextArea2.Text = "";
+            dc.ResetText();
+        }
+
+        private void InitXmlSyntax(Scintilla TextArea)
+        {
+            TextArea.StyleResetDefault();
+            TextArea.Styles[Style.Default].Font = "Consolas";
+            TextArea.Styles[Style.Default].Size = 10;
+            TextArea.Styles[Style.Default].BackColor = IntToColor(0x212121);
+            TextArea.Styles[Style.Default].ForeColor = IntToColor(0xFFFFFF);
+            TextArea.StyleClearAll();
+            TextArea.Styles[Style.Xml.Entity].ForeColor = IntToColor(0x1670C4);
+            TextArea.Styles[Style.Xml.Attribute].ForeColor = IntToColor(0x95DBFD);
+            TextArea.Styles[Style.Xml.AttributeUnknown].ForeColor = IntToColor(0x860023);
+            TextArea.Styles[Style.Xml.CData].ForeColor = IntToColor(0xffffff);
+            TextArea.Styles[Style.Xml.Default].ForeColor = IntToColor(0xffffff);
+            TextArea.Styles[Style.Xml.DoubleString].ForeColor = Color.Salmon;
+            TextArea.Styles[Style.Xml.Tag].ForeColor = IntToColor(0x1670C4);
+            
+        }
+
+        private void CmbFrom_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ClearCompare();
         }
 
         private void InitSyntaxColoring(ScintillaNET.Scintilla TextArea)
@@ -233,13 +352,9 @@ namespace EpicorTraceDiffer
             TextArea.SetKeywords(1, "void Null ArgumentError arguments Array Boolean Class Date DefinitionError Error EvalError Function int Math Namespace Number Object RangeError ReferenceError RegExp SecurityError String SyntaxError TypeError uint XML XMLList Boolean Byte Char DateTime Decimal Double Int16 Int32 Int64 IntPtr SByte Single UInt16 UInt32 UInt64 UIntPtr Void Path File System Windows Forms ScintillaNET");
 
 
-            scinTrace.Styles[Style.Xml.Entity].ForeColor = IntToColor(0xfc9b9b);
-            scinTrace.Styles[Style.Xml.Attribute].ForeColor = IntToColor(0x008080);
-            scinTrace.Styles[Style.Xml.Comment].ForeColor =IntToColor(0x998);
-            scinTrace.Styles[Style.Xml.Number].ForeColor = IntToColor(0x008080);
-            scinTrace.Styles[Style.Xml.Tag].ForeColor = IntToColor(0x0055FF);
-            scinTrace.Styles[Style.Xml.TagEnd].ForeColor = IntToColor(0x0055FF);
             
+
+
         }
 
         public static Color IntToColor(int rgb)
