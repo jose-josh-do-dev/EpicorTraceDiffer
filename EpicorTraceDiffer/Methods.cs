@@ -13,7 +13,8 @@ namespace EpicorTraceDiffer
         public string Method { get; set; }
         public XElement ReturnValue { get; set; }
         public XElement Parameters { get; set; }
-
+        
+        public XElement FullPacket { get; set; }
         public int CompareTo(object obj)
         {
             Methods o = obj as Methods;
