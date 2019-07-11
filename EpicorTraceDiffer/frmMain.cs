@@ -152,15 +152,7 @@ namespace EpicorTraceDiffer
             StringWriter diffgramString = new StringWriter();
             XmlTextWriter diffgramXml = new XmlTextWriter(diffgramString);
             bool diffBool = diff.Compare(new XmlTextReader(new StringReader(from)), new XmlTextReader(new StringReader(to)),diffgramXml);
-            /*XmlDiffView dv = new XmlDiffView();
-            dv.Load(new XmlTextReader(new StringReader(from)), new XmlTextReader(new StringReader(diffgramString.ToString())));
-
-            StringWriter sw = new StringWriter();
-
-
-           
-
-            dv.GetHtml(sw);*/
+      
             IList<string> linesFrom = GetLines(from); ;
             IList<string> linesTo = GetLines(to);
             TextDiff Diff = new TextDiff(HashType.Crc32, true, true);
@@ -207,7 +199,7 @@ namespace EpicorTraceDiffer
                         sbChanged.AppendLine($"{dataSet} ds = new {dataSet}();");
                         first = false;
                     }
-                    dataTable = ds[++dsIdx].Substring(0, ds[dsIdx].Length);
+                    dataTable = ds[++dsIdx].Substring(0, ds[dsIdx].Length); //TODO: Josh fix this line to subtract 1 from index;
                     sbOrig.Append($"ds.{dataTable}");
                     sbChanged.Append($"ds.{dataTable}");
                     field = ds[++dsIdx].Substring(0, ds[dsIdx].IndexOf("["));
