@@ -94,13 +94,13 @@
         "Entry"
         {
         "MsmKey" = "8:_DC7BDF79FA5D245BC85A1C7F4D12F813"
-        "OwnerKey" = "8:_BA9ADC88F8281F2BE3947D7922D7472B"
+        "OwnerKey" = "8:_DB0928815DFB22C077ADBCBCF8599F10"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_DC7BDF79FA5D245BC85A1C7F4D12F813"
-        "OwnerKey" = "8:_DB0928815DFB22C077ADBCBCF8599F10"
+        "OwnerKey" = "8:_BA9ADC88F8281F2BE3947D7922D7472B"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -573,7 +573,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Epicor Trace Differ"
         "ProductCode" = "8:{CAF7D7E5-37B4-4151-BF43-6A1C99255082}"
-        "PackageCode" = "8:{388471ED-A918-46EF-8ABB-2B4AE93996F5}"
+        "PackageCode" = "8:{977C7DA0-70B3-41A5-BB0D-461E7DE1273F}"
         "UpgradeCode" = "8:{4D69FBB0-6BF5-4225-9B15-6620ABC72A55}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
@@ -700,7 +700,7 @@
             "Description" = "8:"
             "ShowCmd" = "3:1"
             "IconIndex" = "3:32512"
-            "Transitive" = "11:FALSE"
+            "Transitive" = "11:TRUE"
             "Target" = "8:_B5F9ADF62075418EAD608C379F7A6FEB"
             "Folder" = "8:_E661F3A187564FF2AC49D73B00522DF0"
             "WorkingFolder" = "8:_D11EE0F07E084188B09862BDCA9F5699"
