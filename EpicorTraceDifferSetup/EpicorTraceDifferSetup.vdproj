@@ -21,6 +21,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_51556F1B3F482EEBDAD743108199D74C"
+        "OwnerKey" = "8:_B5F9ADF62075418EAD608C379F7A6FEB"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_69E9097873E08BE1DFB997E32D3BDBD5"
         "OwnerKey" = "8:_B5F9ADF62075418EAD608C379F7A6FEB"
         "MsmSig" = "8:_UNDEFINED"
@@ -101,6 +107,12 @@
         {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_98A9CF1429416AAE146DB3CF725258A2"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_51556F1B3F482EEBDAD743108199D74C"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -228,6 +240,37 @@
                     }
                 }
             "SourcePath" = "8:XmlDiffPatch.View.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_D11EE0F07E084188B09862BDCA9F5699"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_51556F1B3F482EEBDAD743108199D74C"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:AutoUpdater.NET, Version=1.5.4.0, Culture=neutral, PublicKeyToken=501435c91b35f4bc, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_51556F1B3F482EEBDAD743108199D74C"
+                    {
+                    "Name" = "8:AutoUpdater.NET.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:AutoUpdater.NET.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_D11EE0F07E084188B09862BDCA9F5699"
@@ -528,25 +571,25 @@
         "Product"
         {
         "Name" = "8:Microsoft Visual Studio"
-        "ProductName" = "8:EpicorTraceDifferSetup"
-        "ProductCode" = "8:{BA3F304E-73A0-4D57-B323-316BCAF1544F}"
-        "PackageCode" = "8:{350F6403-2128-47C0-9923-8455DFDE5C77}"
+        "ProductName" = "8:Epicor Trace Differ"
+        "ProductCode" = "8:{CAF7D7E5-37B4-4151-BF43-6A1C99255082}"
+        "PackageCode" = "8:{388471ED-A918-46EF-8ABB-2B4AE93996F5}"
         "UpgradeCode" = "8:{4D69FBB0-6BF5-4225-9B15-6620ABC72A55}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
-        "RemovePreviousVersions" = "11:FALSE"
+        "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
-        "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:1.0.0"
-        "Manufacturer" = "8:Default Company Name"
+        "InstallAllUsers" = "11:TRUE"
+        "ProductVersion" = "8:1.0.1"
+        "Manufacturer" = "8:Jose and Josh Do Dev"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
-        "Title" = "8:EpicorTraceDifferSetup"
+        "Title" = "8:Epicor Trace Differ"
         "Subject" = "8:"
-        "ARPCONTACT" = "8:Default Company Name"
+        "ARPCONTACT" = "8:Jose and Josh Do Dev"
         "Keywords" = "8:"
-        "ARPCOMMENTS" = "8:"
-        "ARPURLINFOABOUT" = "8:"
+        "ARPCOMMENTS" = "8:Epicor Trace File Differ allows you to easily parse and use Epicor Trace Files"
+        "ARPURLINFOABOUT" = "8:https://github.com/jose-josh-do-dev"
         "ARPPRODUCTICON" = "8:"
         "ARPIconIndex" = "3:0"
         "SearchPath" = "8:"
