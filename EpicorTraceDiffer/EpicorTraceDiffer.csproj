@@ -115,6 +115,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="ChangeLog.html" />
     <Content Include="logoraw_notext_fw_Twv_icon.ico" />
     <Content Include="Tracer.txt" />
     <Content Include="Update.xml" />

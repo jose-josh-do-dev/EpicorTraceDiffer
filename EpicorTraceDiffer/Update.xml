@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <item>
   <version>1.0.0.1</version>
-  <url>http://rbsoft.org/downloads/AutoUpdaterTest.zip</url>
+  <url>http://josecgomez.com/files/EpicorDiffer.zip</url>
   <changelog>https://github.com/ravibpatel/AutoUpdater.NET/releases</changelog>
   <mandatory>false</mandatory>
 </item>

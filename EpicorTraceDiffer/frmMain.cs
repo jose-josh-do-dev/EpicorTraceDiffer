@@ -47,7 +47,7 @@ namespace EpicorTraceDiffer
             var ts = mi.GetValue(dc);
             (ts as ToolStripButton).Visible = false;
 
-            AutoUpdater.Start("http://rbsoft.org/updates/AutoUpdaterTest.xml");
+            AutoUpdater.Start("https://raw.githubusercontent.com/jose-josh-do-dev/EpicorTraceDiffer/master/EpicorTraceDiffer/Update.xml");
 
         }
 
