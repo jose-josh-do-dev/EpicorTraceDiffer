@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
 using System.Xml.Linq;
+using AutoUpdaterDotNET;
 
 namespace EpicorTraceDiffer
 {
@@ -45,6 +46,9 @@ namespace EpicorTraceDiffer
             var mi = dc.GetType().GetField("btnViewFile", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic);
             var ts = mi.GetValue(dc);
             (ts as ToolStripButton).Visible = false;
+
+            AutoUpdater.Start("http://rbsoft.org/updates/AutoUpdaterTest.xml");
+
         }
 
         private void btnTrace_Click(object sender, EventArgs e)
@@ -102,6 +106,10 @@ namespace EpicorTraceDiffer
                     toDS = to.ReturnValue.Descendants().Where(d => d.Name.ToString().Contains("DataSet")).FirstOrDefault();
                     equals = true;
                 }
+                else if(from.ReturnValue==null)
+                {
+                    MessageBox.Show("Prior method returns nothing, can't compare what changed!");
+                }
                 else { 
                 
                     fromDS =from.ReturnValue.Descendants().Where(d => d.Name.ToString().Contains("DataSet")).FirstOrDefault();
@@ -115,9 +123,9 @@ namespace EpicorTraceDiffer
                     {
                         MessageBox.Show("To methods doesn't take a data set");
                     }
-                    else
+                    else if(!fromDS.Name.Equals(toDS.Name))
                     {
-                        
+                        MessageBox.Show("These methods take / return different datasets can't compare them");
                     }
 
                 }

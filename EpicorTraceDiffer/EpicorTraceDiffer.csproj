@@ -36,6 +36,9 @@
     <ApplicationIcon>logoraw_notext_fw_Twv_icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoUpdater.NET, Version=1.5.4.0, Culture=neutral, PublicKeyToken=501435c91b35f4bc, processorArchitecture=MSIL">
+      <HintPath>..\packages\Autoupdater.NET.Official.1.5.4\lib\net40\AutoUpdater.NET.dll</HintPath>
+    </Reference>
     <Reference Include="Menees.Common">
       <HintPath>D:\Utils\Diff\Menees.Common\Menees.Common.dll</HintPath>
     </Reference>
@@ -114,6 +117,7 @@
   <ItemGroup>
     <Content Include="logoraw_notext_fw_Twv_icon.ico" />
     <Content Include="Tracer.txt" />
+    <Content Include="Update.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
