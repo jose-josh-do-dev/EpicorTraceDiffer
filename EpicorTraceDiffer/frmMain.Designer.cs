@@ -49,6 +49,8 @@ namespace EpicorTraceDiffer
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.dc = new Menees.Diffs.Controls.DiffControl();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.checkForUpdateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.spcMain)).BeginInit();
             this.spcMain.SuspendLayout();
             this.tabC.SuspendLayout();
@@ -59,6 +61,7 @@ namespace EpicorTraceDiffer
             this.splitTrace.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
+            this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnTrace
@@ -120,8 +123,8 @@ namespace EpicorTraceDiffer
             this.spcMain.IsSplitterFixed = true;
             this.spcMain.Location = new System.Drawing.Point(3, 3);
             this.spcMain.Name = "spcMain";
-            this.spcMain.Size = new System.Drawing.Size(888, 391);
-            this.spcMain.SplitterDistance = 443;
+            this.spcMain.Size = new System.Drawing.Size(952, 391);
+            this.spcMain.SplitterDistance = 474;
             this.spcMain.SplitterWidth = 1;
             this.spcMain.TabIndex = 6;
             // 
@@ -174,7 +177,7 @@ namespace EpicorTraceDiffer
             this.tabPage3.Margin = new System.Windows.Forms.Padding(2);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(2);
-            this.tabPage3.Size = new System.Drawing.Size(894, 397);
+            this.tabPage3.Size = new System.Drawing.Size(958, 397);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Method Trace Info";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -194,7 +197,7 @@ namespace EpicorTraceDiffer
             // splitTrace.Panel2
             // 
             this.splitTrace.Panel2.Controls.Add(this.scinTrace);
-            this.splitTrace.Size = new System.Drawing.Size(890, 393);
+            this.splitTrace.Size = new System.Drawing.Size(954, 393);
             this.splitTrace.SplitterDistance = 73;
             this.splitTrace.SplitterWidth = 1;
             this.splitTrace.TabIndex = 0;
@@ -205,7 +208,7 @@ namespace EpicorTraceDiffer
             this.traceParams.Location = new System.Drawing.Point(0, 0);
             this.traceParams.Margin = new System.Windows.Forms.Padding(2);
             this.traceParams.Name = "traceParams";
-            this.traceParams.Size = new System.Drawing.Size(890, 73);
+            this.traceParams.Size = new System.Drawing.Size(954, 73);
             this.traceParams.TabIndex = 0;
             // 
             // scinTrace
@@ -215,7 +218,7 @@ namespace EpicorTraceDiffer
             this.scinTrace.Location = new System.Drawing.Point(0, 0);
             this.scinTrace.Margin = new System.Windows.Forms.Padding(2);
             this.scinTrace.Name = "scinTrace";
-            this.scinTrace.Size = new System.Drawing.Size(890, 319);
+            this.scinTrace.Size = new System.Drawing.Size(954, 319);
             this.scinTrace.TabIndex = 0;
             // 
             // tabPage1
@@ -249,10 +252,27 @@ namespace EpicorTraceDiffer
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(894, 397);
+            this.tabPage2.Size = new System.Drawing.Size(958, 397);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Code";
             this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // menuStrip1
+            // 
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.checkForUpdateToolStripMenuItem});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(973, 24);
+            this.menuStrip1.TabIndex = 11;
+            this.menuStrip1.Text = "menuStrip1";
+            // 
+            // checkForUpdateToolStripMenuItem
+            // 
+            this.checkForUpdateToolStripMenuItem.Name = "checkForUpdateToolStripMenuItem";
+            this.checkForUpdateToolStripMenuItem.Size = new System.Drawing.Size(113, 20);
+            this.checkForUpdateToolStripMenuItem.Text = "Check For Update";
+            this.checkForUpdateToolStripMenuItem.Click += new System.EventHandler(this.CheckForUpdateToolStripMenuItem_Click);
             // 
             // frmTraceDiffer
             // 
@@ -269,7 +289,9 @@ namespace EpicorTraceDiffer
             this.Controls.Add(this.cmbFrom);
             this.Controls.Add(this.txtTraceFile);
             this.Controls.Add(this.btnTrace);
+            this.Controls.Add(this.menuStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MainMenuStrip = this.menuStrip1;
             this.Name = "frmTraceDiffer";
             this.Text = "Epicor Trace Parser";
             this.Load += new System.EventHandler(this.frmTraceDiffer_Load);
@@ -283,6 +305,8 @@ namespace EpicorTraceDiffer
             this.splitTrace.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -308,6 +332,8 @@ namespace EpicorTraceDiffer
         private System.Windows.Forms.SplitContainer splitTrace;
         private ScintillaNET.Scintilla traceParams;
         private ScintillaNET.Scintilla scinTrace;
+        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem checkForUpdateToolStripMenuItem;
     }
 }
 

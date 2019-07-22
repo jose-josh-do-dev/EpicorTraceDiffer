@@ -15,6 +15,7 @@ using System.Windows.Forms;
 using System.Xml;
 using System.Xml.Linq;
 using AutoUpdaterDotNET;
+using EpicorTraceDiffer.Properties;
 
 namespace EpicorTraceDiffer
 {
@@ -47,7 +48,7 @@ namespace EpicorTraceDiffer
             var ts = mi.GetValue(dc);
             (ts as ToolStripButton).Visible = false;
 
-            AutoUpdater.Start("https://raw.githubusercontent.com/jose-josh-do-dev/EpicorTraceDiffer/master/EpicorTraceDiffer/Update.xml");
+            AutoUpdater.Start(Settings.Default.UpdateURL);
 
         }
 
@@ -317,6 +318,11 @@ namespace EpicorTraceDiffer
         private void CmbFrom_SelectedIndexChanged(object sender, EventArgs e)
         {
             ClearCompare();
+        }
+
+        private void CheckForUpdateToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AutoUpdater.Start(Settings.Default.UpdateURL);
         }
 
         private void InitSyntaxColoring(ScintillaNET.Scintilla TextArea)
