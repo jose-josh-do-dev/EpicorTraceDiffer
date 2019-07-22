@@ -121,4 +121,8 @@
     <Content Include="Update.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>del $(TargetDir)..\..\..\Zips\EpicorDiffer.zip
+powershell.exe -command "&amp; { Add-Type -A 'System.IO.Compression.FileSystem'; [IO.Compression.ZipFile]::CreateFromDirectory('$(TargetDir)', '$(TargetDir)..\..\..\Zips\EpicorDiffer.zip'); }"</PostBuildEvent>
+  </PropertyGroup>
 </Project>
