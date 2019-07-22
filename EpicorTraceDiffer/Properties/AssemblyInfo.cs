@@ -5,10 +5,10 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("EpicorTraceDiffer")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("Epicor Trace Differ")]
+[assembly: AssemblyDescription("Application which allows you to easily parse and process Epicor Client Trace Files")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Jose and Josh Do Dev")]
 [assembly: AssemblyProduct("EpicorTraceDiffer")]
 [assembly: AssemblyCopyright("Copyright ©  2019")]
 [assembly: AssemblyTrademark("")]
