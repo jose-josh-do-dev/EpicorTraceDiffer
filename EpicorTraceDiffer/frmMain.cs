@@ -17,6 +17,7 @@ using System.Xml.Linq;
 using AutoUpdaterDotNET;
 using EpicorTraceDiffer.Properties;
 
+
 namespace EpicorTraceDiffer
 {
     public partial class frmTraceDiffer : Form
@@ -61,28 +62,36 @@ namespace EpicorTraceDiffer
                 txtTraceFile.Text = ofd.FileName;
                 var fragments = File.ReadAllText(ofd.FileName);
                 var myXml = $"<root>{fragments}</root>";
-
-                xmlDoc = XDocument.Parse(myXml);
-                methods = xmlDoc.Descendants("methodName").ToList();
-                methodListFrom = new List<Methods>();
-                methodListTo = new List<Methods>();
-                bos = new List<string>();
-                foreach (var x in methods)
-                {
-                    Methods m = new Methods();
-                    m.BO = (x.PreviousNode as XElement).Value;
-                    m.Method = x.Value;
-                    m.Parameters = x.Parent.Descendants("parameters").FirstOrDefault();
-                    m.ReturnValue = x.Parent.Descendants("returnValues").FirstOrDefault();
-                    m.FullPacket = x.Parent;
-                    methodListFrom.Add(m);
-                    methodListTo.Add(m);
-                    if (!bos.Contains(m.BO))
-                        bos.Add(m.BO);
-                }
-                
-                cmbBO.DataSource = bos;
+                var xdoc = XDocument.Parse(myXml);
+                ParseFile(xdoc.Root.Descendants("methodName").ToList());
             }
+        }
+
+        private void ParseFile(List<XElement> ofd)
+        {
+            methods = ofd; ;
+            methodListFrom = new List<Methods>();
+            methodListTo = new List<Methods>();
+            bos = new List<string>();
+            foreach (var x in methods)
+            {
+                Methods m = new Methods();
+                m.BO = (x.PreviousNode as XElement).Value;
+                if (x.Parent?.PreviousNode != null && (x.Parent.PreviousNode as XElement).Name.ToString().Equals("tracegroup"))
+                {
+                    m.TraceGroup = (x.Parent.PreviousNode as XElement).Attribute("name").Value;
+                }
+                m.Method = x.Value;
+                m.Parameters = x.Parent.Descendants("parameters").FirstOrDefault();
+                m.ReturnValue = x.Parent.Descendants("returnValues").FirstOrDefault();
+                m.FullPacket = x.Parent;
+                methodListFrom.Add(m);
+                methodListTo.Add(m);
+                if (!bos.Contains(m.BO))
+                    bos.Add(m.BO);
+            }
+
+            cmbBO.DataSource = bos;
         }
 
         private void btnCompare_Click(object sender, EventArgs e)
@@ -325,7 +334,7 @@ namespace EpicorTraceDiffer
 
         private void CheckForUpdateToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            AutoUpdater.Start(Settings.Default.UpdateURL);
+            
         }
 
         private void BtnSortBOs_Click(object sender, EventArgs e)
@@ -335,6 +344,50 @@ namespace EpicorTraceDiffer
             bos.Sort();
             cmbBO.DataSource = bos;
 
+        }
+
+        private void checkForUpdatesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AutoUpdater.Start(Settings.Default.UpdateURL);
+        }
+
+        private void filterTraceGroupToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(txtTraceFile.Text))
+            {
+                var fragments = File.ReadAllText(txtTraceFile.Text);
+                var myXml = $"<root>{fragments}</root>";
+
+                xmlDoc = XDocument.Parse(myXml);
+                var traceGroups = xmlDoc.Descendants("tracegroup").ToList();
+                TraceGroupFilter tgF = new TraceGroupFilter(traceGroups);
+                if (traceGroups != null)
+                {
+                    if (tgF.ShowDialog(this) == DialogResult.OK)
+                    {
+                        var xe = tgF.selectedTraceGroup;
+                        if (xe != null)
+                        {
+                            List<XElement> li = new List<XElement>();
+                            foreach (var n in xe.NodesAfterSelf())
+                            {
+                                li.AddRange((n as XElement).Descendants("methodName").ToList());
+                            }
+                            ParseFile(li);
+                            lblTG.Text = $"After Trace Group:{xe.Attribute("name").Value.ToString()}";
+                        }
+                        else
+                        {
+                            ParseFile(xmlDoc.Root.Descendants("methodName").ToList());
+                            lblTG.Text = "";
+                        }
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("No TraceGroups were found in your Trace", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
         }
 
         private void InitSyntaxColoring(ScintillaNET.Scintilla TextArea)

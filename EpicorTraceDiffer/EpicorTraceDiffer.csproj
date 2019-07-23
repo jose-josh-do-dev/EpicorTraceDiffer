@@ -82,6 +82,12 @@
     <Compile Include="Methods.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TraceGroupFilter.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TraceGroupFilter.Designer.cs">
+      <DependentUpon>TraceGroupFilter.cs</DependentUpon>
+    </Compile>
     <Compile Include="XPathDiscovery\AttributeXPathName.cs" />
     <Compile Include="XPathDiscovery\CommentXPathName.cs" />
     <Compile Include="XPathDiscovery\ElementXPathName.cs" />
@@ -100,6 +106,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="TraceGroupFilter.resx">
+      <DependentUpon>TraceGroupFilter.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

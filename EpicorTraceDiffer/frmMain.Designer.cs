@@ -52,6 +52,9 @@ namespace EpicorTraceDiffer
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.checkForUpdateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.btnSortBOs = new System.Windows.Forms.Button();
+            this.filterTraceGroupToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.checkForUpdatesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.lblTG = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.spcMain)).BeginInit();
             this.spcMain.SuspendLayout();
             this.tabC.SuspendLayout();
@@ -270,9 +273,12 @@ namespace EpicorTraceDiffer
             // 
             // checkForUpdateToolStripMenuItem
             // 
+            this.checkForUpdateToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.filterTraceGroupToolStripMenuItem,
+            this.checkForUpdatesToolStripMenuItem});
             this.checkForUpdateToolStripMenuItem.Name = "checkForUpdateToolStripMenuItem";
-            this.checkForUpdateToolStripMenuItem.Size = new System.Drawing.Size(113, 20);
-            this.checkForUpdateToolStripMenuItem.Text = "Check For Update";
+            this.checkForUpdateToolStripMenuItem.Size = new System.Drawing.Size(59, 20);
+            this.checkForUpdateToolStripMenuItem.Text = "Actions";
             this.checkForUpdateToolStripMenuItem.Click += new System.EventHandler(this.CheckForUpdateToolStripMenuItem_Click);
             // 
             // btnSortBOs
@@ -285,11 +291,36 @@ namespace EpicorTraceDiffer
             this.btnSortBOs.UseVisualStyleBackColor = true;
             this.btnSortBOs.Click += new System.EventHandler(this.BtnSortBOs_Click);
             // 
+            // filterTraceGroupToolStripMenuItem
+            // 
+            this.filterTraceGroupToolStripMenuItem.Name = "filterTraceGroupToolStripMenuItem";
+            this.filterTraceGroupToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.filterTraceGroupToolStripMenuItem.Text = "Filter Trace Group";
+            this.filterTraceGroupToolStripMenuItem.Click += new System.EventHandler(this.filterTraceGroupToolStripMenuItem_Click);
+            // 
+            // checkForUpdatesToolStripMenuItem
+            // 
+            this.checkForUpdatesToolStripMenuItem.Name = "checkForUpdatesToolStripMenuItem";
+            this.checkForUpdatesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.checkForUpdatesToolStripMenuItem.Text = "Check for Updates";
+            this.checkForUpdatesToolStripMenuItem.Click += new System.EventHandler(this.checkForUpdatesToolStripMenuItem_Click);
+            // 
+            // lblTG
+            // 
+            this.lblTG.AutoSize = true;
+            this.lblTG.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTG.ForeColor = System.Drawing.Color.Red;
+            this.lblTG.Location = new System.Drawing.Point(595, 34);
+            this.lblTG.Name = "lblTG";
+            this.lblTG.Size = new System.Drawing.Size(0, 25);
+            this.lblTG.TabIndex = 13;
+            // 
             // frmTraceDiffer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(973, 594);
+            this.Controls.Add(this.lblTG);
             this.Controls.Add(this.btnSortBOs);
             this.Controls.Add(this.tabC);
             this.Controls.Add(this.lblBO);
@@ -347,6 +378,9 @@ namespace EpicorTraceDiffer
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem checkForUpdateToolStripMenuItem;
         private System.Windows.Forms.Button btnSortBOs;
+        private System.Windows.Forms.ToolStripMenuItem filterTraceGroupToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem checkForUpdatesToolStripMenuItem;
+        private System.Windows.Forms.Label lblTG;
     }
 }
 

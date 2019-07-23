@@ -11,6 +11,8 @@ namespace EpicorTraceDiffer
     {
         public string BO { get; set; }
         public string Method { get; set; }
+
+        public string TraceGroup { get; set; }
         public XElement ReturnValue { get; set; }
         public XElement Parameters { get; set; }
         
