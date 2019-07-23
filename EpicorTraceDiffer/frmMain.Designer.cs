@@ -51,6 +51,7 @@ namespace EpicorTraceDiffer
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.checkForUpdateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnSortBOs = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.spcMain)).BeginInit();
             this.spcMain.SuspendLayout();
             this.tabC.SuspendLayout();
@@ -274,11 +275,22 @@ namespace EpicorTraceDiffer
             this.checkForUpdateToolStripMenuItem.Text = "Check For Update";
             this.checkForUpdateToolStripMenuItem.Click += new System.EventHandler(this.CheckForUpdateToolStripMenuItem_Click);
             // 
+            // btnSortBOs
+            // 
+            this.btnSortBOs.Location = new System.Drawing.Point(470, 70);
+            this.btnSortBOs.Name = "btnSortBOs";
+            this.btnSortBOs.Size = new System.Drawing.Size(75, 23);
+            this.btnSortBOs.TabIndex = 12;
+            this.btnSortBOs.Text = "Sort";
+            this.btnSortBOs.UseVisualStyleBackColor = true;
+            this.btnSortBOs.Click += new System.EventHandler(this.BtnSortBOs_Click);
+            // 
             // frmTraceDiffer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(973, 594);
+            this.Controls.Add(this.btnSortBOs);
             this.Controls.Add(this.tabC);
             this.Controls.Add(this.lblBO);
             this.Controls.Add(this.cmbBO);
@@ -334,6 +346,7 @@ namespace EpicorTraceDiffer
         private ScintillaNET.Scintilla scinTrace;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem checkForUpdateToolStripMenuItem;
+        private System.Windows.Forms.Button btnSortBOs;
     }
 }
 

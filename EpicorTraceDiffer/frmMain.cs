@@ -80,6 +80,7 @@ namespace EpicorTraceDiffer
                     if (!bos.Contains(m.BO))
                         bos.Add(m.BO);
                 }
+                
                 cmbBO.DataSource = bos;
             }
         }
@@ -95,11 +96,11 @@ namespace EpicorTraceDiffer
                 bool equals = false;
                 if(!from.BO.Equals(to.BO))
                 {
-                    MessageBox.Show("You can't compare methods in different BO's");
+                    MessageBox.Show("You can't compare methods in different BO's","Error",MessageBoxButtons.OK,MessageBoxIcon.Error);
                 }
                 else if(cmbFrom.SelectedIndex> cmdTo.SelectedIndex)
                 {
-                    MessageBox.Show("You can't compare Methods in reverse order (swap prior and target to comapre");
+                    MessageBox.Show("You can't compare Methods in reverse order (swap prior and target to comapre","Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 else if(from.Equals(to))
                 {
@@ -109,7 +110,7 @@ namespace EpicorTraceDiffer
                 }
                 else if(from.ReturnValue==null)
                 {
-                    MessageBox.Show("Prior method returns nothing, can't compare what changed!");
+                    MessageBox.Show("Prior method returns nothing, can't compare what changed!","Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else { 
                 
@@ -118,15 +119,15 @@ namespace EpicorTraceDiffer
 
                     if(fromDS==null)
                     {
-                        MessageBox.Show("From Method isn't returning any data sets");
+                        MessageBox.Show("The Prior Method isn't returning any data sets can't compare to another","Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                     else if(toDS==null)
                     {
-                        MessageBox.Show("To methods doesn't take a data set");
+                        MessageBox.Show("The Method to Run doesn't take a dataset parameter so we can't compare it to the prior method","Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                     else if(!fromDS.Name.Equals(toDS.Name))
                     {
-                        MessageBox.Show("These methods take / return different datasets can't compare them");
+                        MessageBox.Show("These methods take / return different datasets can't realistically compare them", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
 
                 }
@@ -265,8 +266,10 @@ namespace EpicorTraceDiffer
 
         private void cmbBO_SelectedIndexChanged(object sender, EventArgs e)
         {
-            cmbFrom.DataSource = methodListFrom.Where(b => b.BO == cmbBO.SelectedItem.ToString()).ToList();
-            cmdTo.DataSource = methodListTo.Where(b => b.BO == cmbBO.SelectedItem.ToString()).ToList();
+            if(cmbBO.SelectedItem!=null)
+                cmbFrom.DataSource = methodListFrom.Where(b => b.BO == cmbBO.SelectedItem.ToString()).ToList();
+            if (cmbBO.SelectedItem != null)
+                cmdTo.DataSource = methodListTo.Where(b => b.BO == cmbBO.SelectedItem.ToString()).ToList();
         }
 
         private void CmdTo_SelectedIndexChanged(object sender, EventArgs e)
@@ -323,6 +326,15 @@ namespace EpicorTraceDiffer
         private void CheckForUpdateToolStripMenuItem_Click(object sender, EventArgs e)
         {
             AutoUpdater.Start(Settings.Default.UpdateURL);
+        }
+
+        private void BtnSortBOs_Click(object sender, EventArgs e)
+        {
+
+            cmbBO.DataSource = null;
+            bos.Sort();
+            cmbBO.DataSource = bos;
+
         }
 
         private void InitSyntaxColoring(ScintillaNET.Scintilla TextArea)
